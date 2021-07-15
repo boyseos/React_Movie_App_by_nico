@@ -46,5 +46,6 @@
   },
   "devDependencies": {
     "ts-loader": "^9.2.3"
-  }
+  },
+  "homepage": "https://github.com/boyseos/React_Movie_App_by_nico"
 }
