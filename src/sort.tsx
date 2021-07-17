@@ -2,7 +2,7 @@ import React from 'react'
 
 function swap(a: number,b: number){
     let temp = a
-    b = a, a = temp
+    b = a; a = temp
 }
 
 function quickSort (arr: Array<number>): number[]{

@@ -1,47 +1,19 @@
 import React from "react"
-import axios from "axios"
-import Movie from "./Movie"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import About from "./routes/About"
+import Navigation from "./components/Navigation"
+import Main from "./routes/Main"
+import Detail from "./routes/Detail"
 
-class App extends React.Component {
-  state:{isLoading: boolean, movies: []} = {
-    isLoading: true,
-    movies: []
-  }
-  getMovies = async () => {
-    const {data: {status} , data: {data: {movies}}} = await axios.get(`https://yts-proxy.now.sh/list_movies.json?sort_by=rating`)
-    const result: Boolean = status === "ok"
-    if (result) this.setState({ movies: movies, isLoading: false })
-    //result ? this.setState({ movies: movies, isLoading: false }) : null
-    console.log(`movies Load ${result}`, movies)
-  }
-  componentDidMount() {
-    this.getMovies()
-    //this.setState((cur: any) => cur.isLoading = false)
-  }
-  render(){
-    const { isLoading, movies } = this.state
-    console.log("Render", this.state)
-    return (
-      <section className="container">
-        { isLoading ?
-          <div className="loader">
-            <span className="loader__text">Loading..</span>
-          </div> :
-          <div className="movies">
-            { movies.map((movie: any) =>(
-              <Movie
-                key={movie.title}
-                year={movie.year}
-                title={movie.title}
-                summary={movie.summary}
-                poster={movie.medium_cover_image}
-                genres={movie.genres}
-              />)
-            )}
-          </div>
-        }
-      </section>)
-  }
+export default function App(){
+  return (
+    <BrowserRouter>
+      <Navigation></Navigation>
+      <Switch>
+        <Route exact path="/movie" component={Main}/>
+        <Route path="/about" component={About}/>
+        <Route path="/movie/:title" component={Detail}/>
+      </Switch>
+    </BrowserRouter>
+  )
 }
-
-export default App;
